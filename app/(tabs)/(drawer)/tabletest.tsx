@@ -15,10 +15,14 @@ export default function HomeScreen() {
   );
   const router = useRouter();
 
-  const handleNameDetails = (item) => {
+  const handleNameDetails = (item: {
+    name: string;
+    calories: number;
+    fat: number;
+  }) => {
     console.log(item);
-    router.navigate({
-      pathname: "appViews/NameDetails",
+    router.push({
+      pathname: "/appViews/NameDetails",
       params: { name: item.name, calories: item.calories, fat: item.fat }, // Can be passed directly
     });
   };

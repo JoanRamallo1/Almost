@@ -5,16 +5,25 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
-  const navigation = useNavigation();
+  const router = useRouter();
+  interface Item {
+    name: string;
+    calories: number;
+    fat: number;
+  }
 
-  const handleNameDetails = (item) => {
-    navigation.navigate("(tabs)/(drawer)/NameDetails", {
-      name: item.name,
-      calories: item.calories,
-      fat: item.fat,
+  const handleNameDetails = (item: {
+    name: string;
+    calories: number;
+    fat: number;
+  }) => {
+    console.log(item);
+    router.push({
+      pathname: "/appViews/NameDetails",
+      params: { name: item.name, calories: item.calories, fat: item.fat }, // Can be passed directly
     });
   };
   return (
