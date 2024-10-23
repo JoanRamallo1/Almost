@@ -10,7 +10,7 @@ export default function NameDetails({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text>Naaaame: {name || "N/A"}</Text>
+      <Text>Naaaabcdaame: {name || "N/A"}</Text>
       <Text>Calories: {calories || "N/A"}</Text>
       <Text>Fat: {fat || "N/A"}</Text>
     </View>
