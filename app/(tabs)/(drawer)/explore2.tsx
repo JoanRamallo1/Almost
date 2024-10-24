@@ -1,51 +1,42 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, Image, Platform } from "react-native";
-
-import { Collapsible } from "@/components/Collapsible";
-import { ExternalLink } from "@/components/ExternalLink";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import React, { useEffect, useState } from "react";
+import { Button, View, Text } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function TabTwoScreen() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log(`Button clicked ${count} times`);
+  }, [count]);
+  useEffect(() => {
+    console.log("Screen is focused");
+  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("Screen is focused");
+
+      return () => {
+        console.log("Screen is unfocused");
+        // Perform any cleanup here
+      };
+    }, []),
+  );
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <Ionicons size={310} name="code-slash" style={styles.headerImage} />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>
-        This app includes examaaple code to help you get started.
-      </ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          TIER2{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          and{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>TIER2</ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">TIER2</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-    </ParallaxScrollView>
+    <View>
+      <Text>Button clicked {count} times</Text>
+      <Button title="Click me" onPress={() => setCount(count + 1)} />
+    </View>
   );
 }
+// Custom hook to log the count
+/*
+function useLogCount(count: number) {
+  useEffect(() => {
+    console.log(`Count value is ${count}`);
+  }, [count]);
+}
 
-const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
-  },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
-  },
-});
+// Usage of the custom hook
+useLogCount(count);
+*/
