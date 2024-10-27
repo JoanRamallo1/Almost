@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import { Image, StyleSheet, Platform, Dimensions } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -51,20 +51,20 @@ const styles = StyleSheet.create({
 
 function useWindowDimensions() {
   const [windowDimensions, setWindowDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   });
 
   useEffect(() => {
-    function handleResize() {
+    function handleResize({ window }) {
       setWindowDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: window.width,
+        height: window.height,
       });
     }
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const subscription = Dimensions.addEventListener("change", handleResize);
+    return () => subscription?.remove();
   }, []);
 
   return windowDimensions;
